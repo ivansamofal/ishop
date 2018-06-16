@@ -19,6 +19,7 @@ use yii\behaviors\TimestampBehavior;
 class Orders extends \yii\db\ActiveRecord
 {
     const STATUS_ACTIVE = 1;
+    const STATUS_JUST_ORDERED = 0;
     /**
      * {@inheritdoc}
      */

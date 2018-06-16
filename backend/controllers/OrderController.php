@@ -82,8 +82,8 @@ class OrderController extends Controller
             'model' => $model,
         ]);
     }
-
-    public function actionCreateOrder()
+    /** at the moment of redirecting to here we generate unique ID for guest and save in redis/session goods and quantity */
+    public function actionCreateOrder($id)
     {
         $model = new Orders();
 //        \Yii::$app->session->writeSession(200, serialize(['test' => 250, 'some' => 'text']));

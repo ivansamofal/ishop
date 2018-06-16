@@ -9,7 +9,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\Orders;
-use common\models\User;
+use backend\models\User;
 
 
 /*
@@ -31,7 +31,7 @@ create guest after fubmit form and in model guests/users on method aftersave we 
 of the goods_in_orders table
 
 create in session array with some rand key and
-foreach($_SESSION['some_unique_guest_id']['goods] as $good){
+foreach(unserialize(\Yii::$app->session->readSession($id))['goods'] as $good){
     $goodInOrders = new GoodInOrders();
     $goodInOrders->good_id = $good->id;
     $goodInOrders->order_id = $orderId; //todo get OrderId from afterSave method or from session
@@ -39,7 +39,7 @@ foreach($_SESSION['some_unique_guest_id']['goods] as $good){
 
 }
 
-
+//todo here we will show to guest goods, which they are going to buy. And they can change quantity or remove good.
 */
 
 $newUserModel = new User;
@@ -52,10 +52,15 @@ $form = ActiveForm::begin([
 ]) ?>
 <?= $form->field($newUserModel, 'username') ?>
 <?= $form->field($newUserModel, 'email') ?>
+<?= $form->field($newUserModel, 'way_payment') ?>
+<?= $form->field($newUserModel, 'way_supply') ?>
+<?= $form->field($newUserModel, 'address') ?>
+<?= $form->field($newUserModel, 'phone') ?>
+<?= $form->field($newUserModel, 'temp_order_id')->hiddenInput() ?>
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Вход', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('To Order!', ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 <?php ActiveForm::end() ?>
