@@ -39,4 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             another text for another branch
         </p>
     </div>
+    <span>
+        this is test text
+    </span>
 </div>
