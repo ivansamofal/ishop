@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
@@ -30,12 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'auth_key',
             'password_hash',
             'password_reset_token',
-            //'email:email',
-            //'status',
-            //'created_at',
-            //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
+    <div>
+        <p>
+            another text for another branch
+        </p>
+    </div>
 </div>
