@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\components\exception\NoGoodsException;
 use Yii;
 use backend\models\Goods;
 use backend\models\GoodSearch;
@@ -57,13 +58,35 @@ class GoodController extends Controller
         ]);
     }
 
-    public function actionGoods(){
-        
-        $goods = Goods::getActiveGoods();
+    /**
+     * @return string
+     */
+    public function actionGoods()
+    {
+        $goods = [];
+        try {
+            $goods = Goods::getActiveGoods();
+        } catch (NoGoodsException $e) {
+            $goods = Goods::getInactiveGoods();
+        } catch (\Exception $e) {
+            echo $e->getMessage();die;
+        }
 
         return $this->render('goods', [
             'goods' => $goods
         ]);
+    }
+
+    public function actionMyGoods()
+    {
+        $query = Goods::find();
+        $query2 = clone $query;
+        var_dump($query);
+        var_dump($query2);
+        $activeGoods = $query->andWhere(['active' => 1])->count();
+        $inactiveGoods = $query2->andWhere(['active' => 0])->count();
+        var_dump($activeGoods);
+        var_dump($inactiveGoods);die;
     }
 
     /**

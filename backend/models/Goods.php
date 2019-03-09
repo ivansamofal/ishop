@@ -1,7 +1,7 @@
 <?php
-
 namespace backend\models;
 
+use common\components\exception\NoGoodsException;
 use Yii;
 
 /**
@@ -61,6 +61,7 @@ class Goods extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 60],
             [['short_description'], 'string', 'max' => 255],
             [['full_description'], 'string', 'max' => 2000],
+            [['info'], 'string', 'max' => 1000],
             [['country'], 'string', 'max' => 50],
         ];
     }
@@ -85,8 +86,34 @@ class Goods extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getActiveGoods(){
-        return self::find()->where(['active' => self::ACTIVE])->all();
+    public static function getGoods()
+    {
+        return self::find();
+    }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     * @throws NoGoodsException
+     */
+    public static function getActiveGoods()
+    {
+        $goods = self::getGoods()->where(['active' => self::ACTIVE])->all();
+        if (!$goods) {
+            throw new NoGoodsException();
+        }
+
+        return $goods;
+    }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     * @throws NoGoodsException
+     */
+    public static function getInactiveGoods()
+    {
+        $goods = self::getGoods()->where(['active' => self::INACTIVE])->all();
+
+        return $goods;
     }
 
     /**
